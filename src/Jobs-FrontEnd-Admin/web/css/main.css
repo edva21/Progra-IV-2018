@@ -1,0 +1,20 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 03-Jun-2018, 09:54:45
+    Author     : edva5
+*/
+
+#busquedaCar{
+    display: flex;    
+}
+#jobSearch{
+    width: 150px;    
+    border: 3px solid #73AD21;
+}
+#carrito{
+    margin-left: auto;
+}
