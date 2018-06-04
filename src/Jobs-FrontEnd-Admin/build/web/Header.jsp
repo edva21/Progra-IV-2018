@@ -33,19 +33,19 @@
                 <ul class="menu">
                      <% if (empresa!=null){%>
                          <li><a href="#"><%=empresa. getEmpresaEmail()%>-<%=empresa.getEmpresaNombre()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
-                         <ul class="menuitem" > <li> <a href="EmpresaLogout">Logout</a></li> </ul>
+                         <ul class="menuitem" > <li> <a href="main.jsp" onclick="javascript:logOutEmp();">Logout</a></li> </ul>
                         </li>
                      <% }%>
                      <% if (oferente!=null){%>
                          <li><a href="#"><%=oferente.getOferenteEmail()%>-<%=oferente.getOferenteNombre()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
-                             <ul class="menuitem" > <li> <a href="main.jsp">Logout</a></li> </ul>
+                             <ul class="menuitem" > <li> <a href="main.jsp" onclick="javascript:logOutOff();">Logout</a></li> </ul>
                          <ul class="menuitem" > <li> <a href="OferenteSubidaPDF.jsp">Subir Currículum PDF</a></li> </ul>
                          <ul class="menuitem" > <li> <a href="EdiciónDatosOferente.jsp">Editar Datos Personales</a></li> </ul>
                         </li>
                      <% }%>
                      <% if (admin!=null){%>
                          <li><a href="#"><%=admin.getAdministradorUserName()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
-                         <ul class="menuitem" > <li> <a href="AdminLogout">Logout</a></li> </ul>
+                         <ul class="menuitem" > <li> <a href="main.jsp" onclick="javascript:logOutAdm();">Logout</a></li> </ul>
                         </li>
                         <div>
                             <ul>
@@ -67,6 +67,138 @@
         </div>
         
         <script>     
+            function logOutOff() {
+                
+                $.ajax({type: "POST",
+                    url: "LogOutOferente",
+                    success:
+                            function (obj) {
+                                
+                            },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 0) {
+
+                            window.alert('Not connect: Verify Network.');
+
+                        } else if (jqXHR.status == 404) {
+
+                            window.alert('Requested page not found [404]');
+
+                        } else if (jqXHR.status == 500) {
+
+                            window.alert('Internal Server Error [500].');
+
+                        } else if (textStatus === 'parsererror') {
+
+                            window.alert('Requested JSON parse failed.');
+
+                        } else if (textStatus === 'timeout') {
+
+                            window.alert('Time out error.');
+
+                        } else if (textStatus === 'abort') {
+
+                            window.alert('Ajax request aborted.');
+
+                        } else {
+
+                            window.alert('Uncaught Error: ' + jqXHR.responseText);
+
+                        }
+
+
+                    }
+                });
+
+            }
+            
+            function logOutEmp() {
+                
+                $.ajax({type: "POST",
+                    url: "LogOutEmpresa",
+                    success:
+                            function (obj) {
+                            },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 0) {
+
+                            window.alert('Not connect: Verify Network.');
+
+                        } else if (jqXHR.status == 404) {
+
+                            window.alert('Requested page not found [404]');
+
+                        } else if (jqXHR.status == 500) {
+
+                            window.alert('Internal Server Error [500].');
+
+                        } else if (textStatus === 'parsererror') {
+
+                            window.alert('Requested JSON parse failed.');
+
+                        } else if (textStatus === 'timeout') {
+
+                            window.alert('Time out error.');
+
+                        } else if (textStatus === 'abort') {
+
+                            window.alert('Ajax request aborted.');
+
+                        } else {
+
+                            window.alert('Uncaught Error: ' + jqXHR.responseText);
+
+                        }
+
+
+                    }
+                });
+
+            }
+            
+            function logOutAdm() {
+                
+                $.ajax({type: "POST",
+                    url: "LogOutAdministrador",
+                    success:
+                            function (obj) {
+                            },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 0) {
+
+                            window.alert('Not connect: Verify Network.');
+
+                        } else if (jqXHR.status == 404) {
+
+                            window.alert('Requested page not found [404]');
+
+                        } else if (jqXHR.status == 500) {
+
+                            window.alert('Internal Server Error [500].');
+
+                        } else if (textStatus === 'parsererror') {
+
+                            window.alert('Requested JSON parse failed.');
+
+                        } else if (textStatus === 'timeout') {
+
+                            window.alert('Time out error.');
+
+                        } else if (textStatus === 'abort') {
+
+                            window.alert('Ajax request aborted.');
+
+                        } else {
+
+                            window.alert('Uncaught Error: ' + jqXHR.responseText);
+
+                        }
+
+
+                    }
+                });
+
+            }
         </script> 
 
     </body>
