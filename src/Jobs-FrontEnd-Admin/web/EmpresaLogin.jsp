@@ -31,7 +31,7 @@
             <div>
                 <H1>No tienes cuenta? </H1>
                 <div class="regresar">
-                    <form method="POST" action ="Registrar">
+                    <form method="POST" action ="RegistrarE">
                         <input class="button-registrar"  type="submit" value="Registrar">
                     </form>
                 </div>        

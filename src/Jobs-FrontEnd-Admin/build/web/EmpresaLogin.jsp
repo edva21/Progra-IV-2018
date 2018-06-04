@@ -55,8 +55,7 @@
                  
             }
         function show(per){
-              location.href="main";
-       
+            location.href="main";
         }
        
         </script>

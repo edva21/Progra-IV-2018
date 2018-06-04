@@ -30,11 +30,19 @@
                 <H1>Empleos</H1></a>
              </div>
             <div class="menus">
-                <ul class="menu">
+                <ul class="menus">
                      <% if (empresa!=null){%>
                          <li><a href="#"><%=empresa. getEmpresaEmail()%>-<%=empresa.getEmpresaNombre()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
                          <ul class="menuitem" > <li> <a href="EmpresaLogout">Logout</a></li> </ul>
                         </li>
+                        <div style="display: inline-block;">
+                            <ul>
+                                <li><a href="Empleo">REGISTRAR EMPLEO</a></li>
+                                <li><a href="adminEmpresa">Aprovar Empresas</a></li>
+                                <li><a href="adminHabilidad">Agregar Habilidades</a></li>
+                                <li><a href="adminReporte">Generar Reportes</a></li>
+                            </ul>
+                        </div>
                      <% }%>
                      <% if (admin!=null){%>
                          <li><a href="#"><%=admin.getAdministradorUserName()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
@@ -61,7 +69,6 @@
         
         <script>     
         </script> 
-
     </body>
 </html>
 

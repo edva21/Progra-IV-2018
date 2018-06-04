@@ -349,7 +349,7 @@ public class Model {
     public Empresa login(Empresa obj){
         try{
              Empresa empresa = DataAccess.EmpresaDAO.getInstance().empresaGet(obj.getEmpresaEmail()); 
-            if( empresa!= null && obj.getEmpresaClave().equals(empresa.getEmpresaClave()) && obj.getEmpresaEstadoDeCuenta().equals("APROVADO")){
+            if( empresa!= null && obj.getEmpresaClave().equals(empresa.getEmpresaClave()) && empresa.getEmpresaEstadoDeCuenta().equals("APROVADO")){
                 return empresa;
             }
             else return null;

@@ -137,8 +137,12 @@ public class PuestoDAO extends DAO{
    
     public void puestoIngresar(Puesto a) throws Exception{
        getConnection();
-        String sql="INSERT INTO Puesto (PuestoNombre,PuestoDescripcion,PuestoSalario,PuestoActivo,Empresa_EmpresaEmail,PuestoFecha) VALUES('%s','%s','%d','%b','%s',"+java.sql.Date.valueOf(a.getPuestoFecha())+")";
-        sql=String.format(sql,a.getPuestoNombre(),a.getPuestoDescripcion(),a.getPuestoSalario(),a.getPuestoActivo(),a.getEmpresa().getEmpresaEmail());
+       int x=0;
+       if(a.getPuestoActivo()){ x =1;}
+        String sql="INSERT INTO empleosdb.puesto (PuestoNombre,PuestoDescripcion,PuestoSalario,PuestoActivo,Empresa_EmpresaEmail,PuestoFecha) VALUES('%s','%s','%f','%d','%s','%s')";
+        sql=String.format(sql,a.getPuestoNombre(),a.getPuestoDescripcion(),a.getPuestoSalario(),x,a.getEmpresa().getEmpresaEmail(),java.sql.Date.valueOf(a.getPuestoFecha()));
+       // sql = sql+","+java.sql.Date.valueOf(a.getPuestoFecha())+")";
+       // System.out.println("DataAccess.PuestoDAO.puestoIngresar()"+sql);
         int count=executeUpdate(sql);
         if (count==0){
             throw new Exception("puesto no se pudo ingresar");
