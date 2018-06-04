@@ -17,7 +17,9 @@ public class Habilidad {
     private boolean habilidadEsHoja;
     public Habilidad() {
     }
-
+    public Habilidad(String habilidadNombre) {
+        this.habilidadNombre = habilidadNombre;        
+    }
     public Habilidad(String habilidadNombre, Habilidad habilidadHabilidadNombre) {
         this.habilidadNombre = habilidadNombre;        
     }

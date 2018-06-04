@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 public class OferenteHasHabilidad {
         private OferenteHasHabilidadPK oferenteHasHabilidadPK;
     private int puestoHabilidadPorcentaje;    
-     private Habilidad habilidad;    
-     private Oferente oferente;  
+     private Habilidad habilidad ;    
+     private Oferente oferente; 
 
     public OferenteHasHabilidad() {
     }
