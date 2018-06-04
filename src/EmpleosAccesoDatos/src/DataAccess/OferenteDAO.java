@@ -9,6 +9,7 @@ import BussinessLogic.Oferente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,7 +99,7 @@ private static OferenteDAO INSTANCE;
     public void oferenteIngresar(Oferente a) throws Exception{
        getConnection();
         String sql="INSERT INTO Oferente (OferenteEmail,OferenteCedula,OferenteNombre,OferenteApellido,OferenteTelefono,"
-                + "OferenteResidencia,OferenteCurriculum,OferenteEstadoDeCuenta,OferenteUserName,OferenteClave,OferenteNacionalidad) VALUES('%s','%s','%s','%s','%s','%s','%x','%s','%s','%s','%s')";
+                + "OferenteResidencia,OferenteCurriculum,OferenteEstadoDeCuenta,OferenteUserName,OferenteClave,Nacionalidad) VALUES('%s','%s','%s','%s','%s','%s','%x','%s','%s','%s','%s')";
         sql=String.format(sql,a.getOferenteEmail(),a.getOferenteCedula(),a.getOferenteNombre(),a.getOferenteApellido(),
         a.getOferenteTelefono(),a.getOferenteResidencia(),a.getOferenteCurriculum(),a.getOferenteEstadoDeCuenta(),a.getOferenteUserName(),
         a.getOferenteClave(),a.getOferenteNacionalidad());
@@ -137,9 +138,9 @@ private static OferenteDAO INSTANCE;
     public boolean oferenteUpdate(Oferente a) throws Exception{
        getConnection();
         String sql="UPDATE Oferente SET OferenteCedula='%s',OferenteNombre='%s',OferenteApellido='%s',OferenteTelefono='%s',"
-                + "OferenteResidencia='%s',OferenteCurriculum='%x',OferenteEstadoDeCuenta='%s',OferenteUserName='%s',OferenteClave='%s',OferenteNacionalidad='%s' WHERE OferenteEmail='%s';";
+                + "OferenteResidencia='%s',OferenteCurriculum='%s',OferenteEstadoDeCuenta='%s',OferenteUserName='%s',OferenteClave='%s',Nacionalidad='%s' WHERE OferenteEmail='%s';";
         sql=String.format(sql,a.getOferenteCedula(),a.getOferenteNombre(),a.getOferenteApellido(),
-        a.getOferenteTelefono(),a.getOferenteResidencia(),a.getOferenteCurriculum(),a.getOferenteEstadoDeCuenta(),a.getOferenteUserName(),
+        a.getOferenteTelefono(),a.getOferenteResidencia(),Arrays.toString(a.getOferenteCurriculum()),a.getOferenteEstadoDeCuenta(),a.getOferenteUserName(),
         a.getOferenteClave(),a.getOferenteNacionalidad(),a.getOferenteEmail());
         int count=executeUpdate(sql);
         if (count==0){
