@@ -33,9 +33,9 @@
                             <tr><td class="etiqueta">Tipo</td>
 			   <td>
 				 <table>
-                                     <tr><td class="etiqueta">Publico<input type="radio" name="tipo" value="1" id="Publico"></td>
+                                     <tr><td class="etiqueta">Activar<input type="radio" name="tipo" value="1" id="Publico" checked ></td>
 				       <td id="tdMasc"></td>
-					   <td class="etiqueta">Privado<input type="radio" name="tipo" value="0" id="Privado"></td>
+					   <td class="etiqueta">Desactivar<input type="radio" name="tipo" value="0" id="Privado"></td>
 					   <td id="tdFem"></td></tr>
 				  </table>
 				</td>

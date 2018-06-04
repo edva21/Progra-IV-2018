@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/gaspa/Desktop/ESCINF-209-Jobs2/ESCINF-209-Jobs2/src/Jobs-FrontEnd-Admin/web/EmpresaRegistro.jsp</file>
-            <file>file:/C:/Users/gaspa/Desktop/ESCINF-209-Jobs2/ESCINF-209-Jobs2/src/Jobs-FrontEnd-Admin/src/java/Servlets/ControllerEmpresa.java</file>
-            <file>file:/C:/Users/gaspa/Desktop/ESCINF-209-Jobs2/ESCINF-209-Jobs2/src/Jobs-FrontEnd-Admin/web/adminPuestoReporte.jsp</file>
-            <file>file:/C:/Users/gaspa/Desktop/ESCINF-209-Jobs2/ESCINF-209-Jobs2/src/Jobs-FrontEnd-Admin/src/java/Servlets/ControllerHeader.java</file>
+            <file>file:/C:/Users/gaspa/OneDrive/Documentos/GitHub/Progra-IV-2018/src/Jobs-FrontEnd-Admin/web/AdminLogin.jsp</file>
+            <file>file:/C:/Users/gaspa/OneDrive/Documentos/GitHub/Progra-IV-2018/src/Jobs-FrontEnd-Admin/web/Header.jsp</file>
+            <file>file:/C:/Users/gaspa/OneDrive/Documentos/GitHub/Progra-IV-2018/src/Jobs-FrontEnd-Admin/web/EmpresaLogin.jsp</file>
+            <file>file:/C:/Users/gaspa/OneDrive/Documentos/GitHub/Progra-IV-2018/src/Jobs-FrontEnd-Admin/src/java/Servlets/ControllerOferente.java</file>
+            <file>file:/C:/Users/gaspa/OneDrive/Documentos/GitHub/Progra-IV-2018/src/Jobs-FrontEnd-Admin/web/EmpresaRegistro.jsp</file>
+            <file>file:/C:/Users/gaspa/OneDrive/Documentos/GitHub/Progra-IV-2018/src/Jobs-FrontEnd-Admin/web/EmpleoRegistro.jsp</file>
+            <file>file:/C:/Users/gaspa/OneDrive/Documentos/GitHub/Progra-IV-2018/src/Jobs-FrontEnd-Admin/src/java/Servlets/ControllerEmpresa.java</file>
         </group>
     </open-files>
 </project-private>
