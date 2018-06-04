@@ -12,23 +12,27 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author fabio
  */
-@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm", "/GetNac","/toOferenteRegistro"})
+@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm", "/GetNac","/toOferenteRegistro", "/UploadPDF"})
 public class ControllerOferente extends HttpServlet {
 
     /**
@@ -55,6 +59,9 @@ public class ControllerOferente extends HttpServlet {
                 break; 
             case "/toOferenteRegistro":
                 request.getRequestDispatcher("OfferentRegistro.jsp").forward(request, response);
+                break;
+            case "/UploadPDF":
+                this.doUploadPDF(request, response);
                 break;
         }
     }
@@ -161,6 +168,28 @@ public class ControllerOferente extends HttpServlet {
             }
         } catch (IOException ex) {
             response.setStatus(401);
+        }
+    }
+
+    private void doUploadPDF(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            
+            InputStream fileReader = request.getInputStream();
+            final byte[] bitesFile = new byte[1024];
+            fileReader.read(bitesFile);
+            
+            Oferente o = Model.getInstance().readOferente("fabio@email.com");
+            o.setOferenteCurriculum(bitesFile);
+            boolean b = Model.getInstance().update(o);
+            if (b) {
+                response.setStatus(200);
+            } else {
+                response.setStatus(401);
+            }
+        } catch (FileNotFoundException ex ) {
+            Logger.getLogger(ControllerOferente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ControllerOferente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

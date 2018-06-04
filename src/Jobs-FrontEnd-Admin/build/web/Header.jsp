@@ -36,6 +36,11 @@
                          <ul class="menuitem" > <li> <a href="EmpresaLogout">Logout</a></li> </ul>
                         </li>
                      <% }%>
+                     <% if (oferente!=null){%>
+                         <li><a href="#"><%=oferente.getOferenteEmail()%>-<%=oferente.getOferenteNombre()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
+                         <ul class="menuitem" > <li> <a href="OferenteLogout">Logout</a></li> </ul>
+                        </li>
+                     <% }%>
                      <% if (admin!=null){%>
                          <li><a href="#"><%=admin.getAdministradorUserName()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
                          <ul class="menuitem" > <li> <a href="AdminLogout">Logout</a></li> </ul>                         
