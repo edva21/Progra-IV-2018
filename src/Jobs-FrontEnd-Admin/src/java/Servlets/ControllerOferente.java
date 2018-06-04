@@ -5,18 +5,27 @@ package Servlets;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import BussinessLogic.Habilidad;
+import BussinessLogic.Habilidad_Porcentaje;
 import BussinessLogic.Nacionalidad;
 import BussinessLogic.Oferente;
+import BussinessLogic.OferenteHasHabilidad;
+import FEBussinesLogic.OferenteHabilidadDto;
 import Model.Model;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +37,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author fabio
  */
-@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm", "/GetNac","/toOferenteRegistro"})
+@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm", "/GetNac","/toOferenteRegistro","/OfferentCurriculum","/OfferentHabilidad","/oferHabUpdate","/oferHabGet"})
 public class ControllerOferente extends HttpServlet {
 
     /**
@@ -55,6 +64,19 @@ public class ControllerOferente extends HttpServlet {
                 break; 
             case "/toOferenteRegistro":
                 request.getRequestDispatcher("OfferentRegistro.jsp").forward(request, response);
+                break;
+            case "/OfferentHabilidad":
+                request.setAttribute("habilidades",Model.getInstance().readAllHabilidadRoots());
+                request.getRequestDispatcher("OfferentHabilidad.jsp").forward(request, response);
+                break;
+            case "/OfferentCurriculum":
+                request.getRequestDispatcher("OfferentCurriculum.jsp").forward(request, response);
+                break;
+            case "/oferHabUpdate":
+                updateHabilidades(request, response);
+                break;
+            case "/oferHabGet":
+                sendHabilidades(request, response);
                 break;
         }
     }
@@ -163,5 +185,56 @@ public class ControllerOferente extends HttpServlet {
             response.setStatus(401);
         }
     }
+    private void updateHabilidades(HttpServletRequest request, HttpServletResponse response) {
+              ArrayList<OferenteHabilidadDto> list = new ArrayList<>();
+        Gson gson = new GsonBuilder().create();                        
+        Oferente oferente = (Oferente) request.getSession().getAttribute("oferente");
+        try (Reader reader = request.getReader()) {
+            
+            OferenteHabilidadDto[] users = gson.fromJson(reader, OferenteHabilidadDto[].class);
+            for(int i=0;i<users.length;i++){
+                list.add(users[i]);
+                Model.getInstance().create(new OferenteHasHabilidad(users[i].getPorcentaje(), new Habilidad(users[i].getnombre()), oferente));
+            }
+                try {        
+                    PrintWriter out = response.getWriter();
+                    response.setContentType("application/json; charset=UTF-8");
+                    out.write(gson.toJson(oferente));
+                } catch (IOException ex) {
+                    Logger.getLogger(ControllerOferente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+        
+        //respons)e.setContentType("application/json; charset=UTF-8");
+         //out.write(gson.toJson(Model.getInstance().readPuestos(list)));                          
+         response.setStatus(200); //Good request
+      } catch (IOException ex) {
+            Logger.getLogger(ControllerOferente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+  }
+    private void sendHabilidades(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList<OferenteHabilidadDto> list = new ArrayList<>();
+        Gson gson = new GsonBuilder().create();                        
+        Oferente oferente = (Oferente) request.getSession().getAttribute("oferente");        
+        
+        PrintWriter out;        
+        try {
+            out = response.getWriter();
+            List<OferenteHasHabilidad> l=Model.getInstance().OferenteHasHabilidadbyOferente(oferente.getOferenteEmail());
+        
+        ArrayList<OferenteHabilidadDto> lDto= new ArrayList();
+        
+        l.forEach(x->lDto.add(new OferenteHabilidadDto(x)));        
+        
+         response.setContentType("application/json; charset=UTF-8");
+         out.write(gson.toJson(lDto));                          
+         response.setStatus(200); //Good request
+        } catch (IOException ex) {
+            Logger.getLogger(ControllerOferente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                              
+      }
+      
 
 }

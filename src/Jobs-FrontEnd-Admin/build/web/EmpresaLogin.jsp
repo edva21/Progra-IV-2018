@@ -31,7 +31,7 @@
             <div>
                 <H1>No tienes cuenta? </H1>
                 <div class="regresar">
-                    <form method="POST" action ="RegistrarE">
+                    <form method="POST" action ="Registrar">
                         <input class="button-registrar"  type="submit" value="Registrar">
                     </form>
                 </div>        
@@ -55,8 +55,7 @@
                  
             }
         function show(per){
-              location.href="main";
-       
+            location.href="main";
         }
        
         </script>

@@ -48,6 +48,17 @@
                                 <li><a href="adminReporte">Generar Reportes</a></li>
                             </ul>
                         </div>
+                     <% }%>       
+                     <% if (oferente!=null){%>
+                         <li><a id="oferenteId" href="#"><%=oferente.getOferenteEmail()%><img class="inline" style="width: 15px; height: auto;" src="images/da.png" alt=""></a>
+                         <ul class="menuitem" > <li> <a href="AdminLogout">Logout</a></li> </ul>                         
+                        </li>
+                        <div>
+                            <ul>
+                                <li><a href="OfferentHabilidad">Actualizar Destrezas</a></li>
+                                <li><a href="OfferentCurriculum">Subir Curriculum</a></li>                                
+                            </ul>
+                        </div>
                      <% }%>
                      <% if (empresa==null && oferente== null && admin== null){%>
                         <li><a href="OfferentLogin.jsp">ACCESO OFERENTE </a></li>
