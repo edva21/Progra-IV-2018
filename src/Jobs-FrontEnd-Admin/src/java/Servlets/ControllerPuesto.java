@@ -100,6 +100,8 @@ public class ControllerPuesto extends HttpServlet {
     private void doSearchJobs(HttpServletRequest request, HttpServletResponse response) {        
         //BufferedReader reader = request.getReader();
         ArrayList<Habilidad_Porcentaje> list = new ArrayList<>();
+        ArrayList<PuestoDto> listPuestoDto = new ArrayList<>();
+        List<Puesto> listPuesto = new ArrayList<>();
         Gson gson = new GsonBuilder().create();                        
         
         try (Reader reader = request.getReader()) {
@@ -110,9 +112,11 @@ public class ControllerPuesto extends HttpServlet {
                 list.add(e);
             });
         PrintWriter out = response.getWriter();
-        
+        listPuesto=Model.getInstance().readPuestos(list);
+        for(Puesto p:listPuesto)
+            listPuestoDto.add(new PuestoDto(p));
         response.setContentType("application/json; charset=UTF-8");
-         out.write(gson.toJson(Model.getInstance().readPuestos(list)));                          
+         out.write(gson.toJson(listPuestoDto));                          
          response.setStatus(200); //Good request
       }
       catch(Exception e){	

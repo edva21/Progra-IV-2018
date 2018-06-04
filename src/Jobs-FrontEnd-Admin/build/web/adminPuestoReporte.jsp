@@ -17,13 +17,14 @@
     <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js" integrity="sha384-CchuzHs077vGtfhGYl9Qtc7Vx64rXBXdIAZIPbItbNyWIRTdG0oYAqki3Ry13Yzu" crossorigin="anonymous"></script>
     <script src="js/adminPuestoReporte.js"></script>
+    <link rel="stylesheet" href="css/adminPuestoReporte.css">
 </head>
 <body>
     <%@ include file="Header.jsp"%>
     
     <div id="reporte">
         <input id="monthPicker" width="276" />
-    <button type="button" class="btn btn-primary" onclick="javascript:bringpdf()">Generar Reporte</button> 
+    <button id="monthButton" type="button" class="btn btn-primary" onclick="javascript:bringpdf()">Generar Reporte</button> 
     </div>
     <script>
         $('#monthPicker').datetimepicker({

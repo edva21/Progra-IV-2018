@@ -62,12 +62,12 @@ public class OferenteHashabilidadDAO extends DAO{
         }
     }
     
-    public List<OferenteHasHabilidad> oferenteHasHabilidadBuscarOferente(OferenteHasHabilidad filtro) throws Exception{
+    public List<OferenteHasHabilidad> oferenteHasHabilidadBuscarOferente(String OferenteEmail) throws Exception{
          getConnection();
         List<OferenteHasHabilidad> resultado = new ArrayList<>();
         try {
             String sql="select * from Oferente_has_Habilidad  where Oferente_OferenteEmail like '%%%s%%'";
-            sql=String.format(sql,filtro.getOferente().getOferenteEmail());
+            sql=String.format(sql,OferenteEmail);
             ResultSet rs =  executeQuery(sql);
             while (rs.next()) {
                 resultado.add(oferenteHasHabilidad(rs));
@@ -115,4 +115,27 @@ public class OferenteHashabilidadDAO extends DAO{
         }
          desconectar();
     }
+     public void oferenteHasHabilidadIngresar(String OferenteEmail,String  HabilidadNombre,int HabilidadPorcentaje) throws Exception{
+       getConnection();
+        String sql="INSERT INTO Oferente_has_Habilidad (Oferente_OferenteEmail,Habilidad_HabilidadNombre,Puesto_HabilidadPorcentaje) VALUES('%s','%s','%d')";
+        sql=String.format(sql,OferenteEmail,HabilidadNombre,HabilidadPorcentaje);
+        int count=executeUpdate(sql);
+        if (count==0){
+            throw new Exception(" oferenteHasHabilidad no se pudo ingresar");
+        }
+        desconectar();
+    }
+     public void oferenteHasHabilidadClean(String OferenteEmail){
+       getConnection();
+        String sql="DELETE FROM Oferente_has_Habilidad WHERE Oferente_OferenteEmail="+OferenteEmail;        
+        int count=executeUpdate(sql);
+        if (count==0){
+           try {
+               throw new Exception(" oferenteHasHabilidad no se pudo Eliminar");
+           } catch (Exception ex) {
+               Logger.getLogger(OferenteHashabilidadDAO.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        }
+       desconectar();
+     }
 }

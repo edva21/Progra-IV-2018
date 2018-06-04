@@ -89,6 +89,8 @@ public  class DAO {
             Statement stm = conexion.createStatement();        
             return stm.executeQuery(statement);
         } catch (SQLException ex) {
+            System.out.println("DataAccess.DAO.executeQuery()");
+            System.out.println(ex.getSQLState()+" "+ex.getMessage()+" "+ex.getErrorCode());
         }
         return null;
     }

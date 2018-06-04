@@ -86,7 +86,10 @@ public class Model {
     }
     public boolean create(OferenteHasHabilidad obj){
         try {
-            DataAccess.OferenteHashabilidadDAO.getInstance().oferenteHasHabilidadIngresar(obj);
+            DataAccess.OferenteHashabilidadDAO.getInstance().oferenteHasHabilidadIngresar(
+                    obj.getOferente().getOferenteEmail(),
+                    obj.getHabilidad().getHabilidadNombre(),
+                    obj.getPuestoHabilidadPorcentaje());
             return true;
         } catch (Exception ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
@@ -427,10 +430,10 @@ public class Model {
           
     }
     public List<Puesto> readPuestos(ArrayList<Habilidad_Porcentaje> habilidades){
-        String attributes="idPuesto,Empresa_EmpresaEmail,PuestoNombre,Empresa_EmpresaEmail,PuestoActivo,PuestoDescripcion,PuestoSalario,PuestoFecha";
+        String attributes="idPuesto,PuestoNombre,Empresa_EmpresaEmail,PuestoActivo,PuestoDescripcion,PuestoSalario,PuestoFecha";
         if(habilidades!=null){                    
                 try {
-                    return DataAccess.PuestoDAO.getInstance().puestoListar(buildQuery(habilidades, 0, attributes));
+                    return DataAccess.PuestoDAO.getInstance().puestoListar(buildQuery(habilidades, 0, attributes)+';');
                 } catch (Exception ex) {
                     Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
                     return new ArrayList<>();
@@ -441,17 +444,19 @@ public class Model {
         }       
     
     
-    private String buildQuery(ArrayList<Habilidad_Porcentaje> habilidades,int i,String things){
+    private String buildQuery(ArrayList<Habilidad_Porcentaje> habilidades,int i,String puestoAttributes){
         
         if(i<habilidades.size()-1){
-             return "SELECT "+things+" FROM ("+buildQuery(habilidades, i+1, things)+"),PuestoHabilidad "
-                    + "WHERE idPuesto=puestoIdPuesto "
-                    + "AND Habilidad_HabilidadNombre="+habilidades.get(i).getNombre()+" "
-                    + "AND Puesto_HabilidadPorcentaje<="+habilidades.get(i).getPorcentaje();}
+             return "SELECT DISTINCT "+puestoAttributes+" FROM ("+buildQuery(habilidades, i+1, puestoAttributes)+") AS T,Puesto_Habilidad,Habilidad "
+                    + "WHERE T.idPuesto=Puesto_Habilidad.Puesto_idPuesto "
+                    + "AND Puesto_Habilidad.Habilidad_HabilidadNombre='"+habilidades.get(i).getNombre()+"' "
+                    + "AND Puesto_HabilidadPorcentaje<="+habilidades.get(i).getPorcentaje();}                   
         else if (i==habilidades.size()-1){
-             return "SELECT "+things+" FROM Puesto,PuestoHabilidad "
-                    + "WHERE idPuesto=puestoIdPuesto "
-                    + "AND Habilidad_HabilidadNombre="+habilidades.get(i).getNombre()+" "
+             return "SELECT DISTINCT "+puestoAttributes+" FROM Puesto,Puesto_Habilidad,Habilidad "
+                    + "WHERE Puesto.idPuesto=Puesto_Habilidad.Puesto_idPuesto "
+                    + "AND Puesto.PuestoActivo="+true+" "
+                    + "AND Puesto_Habilidad.Habilidad_HabilidadNombre=Habilidad.habilidadNombre "
+                    + "AND Habilidad.HabilidadNombre='"+habilidades.get(i).getNombre()+"' "
                     + "AND Puesto_HabilidadPorcentaje<="+habilidades.get(i).getPorcentaje();}
         else 
               return  "SELECT * FROM Puesto";             
@@ -464,4 +469,16 @@ public class Model {
             return null;
         }
     }
+    public void cleanOferenteHasHabilidad(String OferenteEmail){
+        DataAccess.OferenteHashabilidadDAO.getInstance().oferenteHasHabilidadClean(OferenteEmail);
+    }
+    
+    public List<OferenteHasHabilidad> OferenteHasHabilidadbyOferente(String oferenteEmail){
+        try {
+            return DataAccess.OferenteHashabilidadDAO.getInstance().oferenteHasHabilidadBuscarOferente(oferenteEmail);            
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList<OferenteHasHabilidad>();
+        }
+    }    
 }

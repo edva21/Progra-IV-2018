@@ -3,13 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-// Get the input field
-// Execute a function when the user releases a key on the keyboard
 var stack =[];
 var checkedStack =[];
 var mainStack =[];
@@ -193,7 +186,8 @@ function searchJobs(){ //borraLista e Imprime hijos de la habilidad
                                   async: true,
                                   success: 
                                     function(x){                                                                
-                                     createReportMain(x);
+                                     for(var i=0;i<x.length;i++)                                        
+                                        show(x[i]);
                                     },
                                     error: function(xhr, ajaxOptions, thrownError){                        
                                             window.alert("Error al Buscar Trabajos: "+xhr.status+" "+ajaxOptions);                                            
@@ -237,43 +231,51 @@ function showJobDescrition(x){
             +"\nEmpresa:"+x.empresa
             +"\nFecha:"+x.puestoFecha);
 }
-function createReportMain(jobArr){
-    if(jobArr!==null){
-        if(jobArr.length>0){
-            var doc = new jsPDF();
-        doc.text('Busqueda Puestos de Trabajo', 50, 10);        
-        for(var i=jobArr.length-1;i>=0;i--){              
-            doc.setFontSize(24);
-            //doc.setTextColor(220,55,53);
-            doc.setFontStyle("italic");
-            doc.text('Nombre:'+jobArr[i].puestoNombre, 10, 10*(counter+2));
-            measureLines(doc);
-            //doc.setTextColor(0,128,255);
-            doc.setFontSize(18);
-            doc.text('Empresa:'+jobArr[i].empresa, 10, 10*(counter+2));
-            measureLines(doc);
-            //doc.setTextColor(51,0,0);
-            doc.setFontSize(12);
-            doc.setFontStyle("helvetica");
-            doc.text('Descripcion:'+jobArr[i].puestoDescripcion, 10, 10*(counter+2));
-            measureLines(doc);
-            doc.text('Id:'+jobArr[i].idPuesto, 10, 10*(counter+2));
-            measureLines(doc);
-            doc.text('Salario:'+jobArr[i].puestoSalario, 10, 10*(counter+2));
-            measureLines(doc);                        
-            doc.text('Fecha:'+jobArr[i].puestoFecha, 10, 10*(counter+2));
-            measureLines(doc);
-            //jobArr.shift();
-        }       
-        
-        doc.save('reporte.pdf');        
-        counter=0;
-        }
-        else{
-            alert("Ningung Puesto CumpleCon los Filtros Especificados");
-        }
-    }   
-    else{
-            alert("Ningung Puesto CumpleCon los Filtros Especificados");
-        }
+function guardarCambios(){
+    $.ajax({type: "POST", 
+                                url:"oferHabUpdate", 
+                                data:JSON.stringify(mainStack),
+                                datatype:"application/json",
+                                  processData: false, 
+                                  contentType: false,   
+                                  async: true,
+                                  success: 
+                                    function(x){                                                                                                     
+                                        window.alert("Camios Guardados");                                            
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError){                        
+                                            window.alert("Error al Buscar Trabajos: "+xhr.status+" "+ajaxOptions);                                                                                                                               
+                                    }                    
+                            }); 
 }
+//oferHabGet
+function getHabilidadesOferente(){
+    $.ajax({type: "POST", 
+                                url:"oferHabGet", 
+                                data:JSON.stringify(mainStack),
+                                datatype:"application/json",
+                                  processData: false, 
+                                  contentType: false,   
+                                  async: true,
+                                  success: 
+                                    function(x){                                                                                                     
+                                        window.alert("Camios Guardados");                                            
+                                        mainStack=x;
+                                        LoadData();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError){                        
+                                            window.alert("Error al Buscar Trabajos: "+xhr.status+" "+ajaxOptions);                                                                                                                               
+                                    }                    
+                            }); 
+}
+function LoadData(){
+    for(var i=0;i<mainStack.length;i++)
+        addLeafData(mainStack[i]);
+}
+function addLeafData(habilidad){    
+        printMSItem(habilidad);
+        $('#'+habilidad.nombre+"nmbr").show();                        
+        $('#'+habilidad.nombre).prop('checked',true);
+        $('#'+habilidad.habilidadNombre+"nmbr").val(habilidad.porcentaje);                
+}
+
