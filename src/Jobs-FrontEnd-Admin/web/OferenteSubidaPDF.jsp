@@ -15,6 +15,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
+
+        <%@ include file="Header.jsp" %>
+
         <div id="body" style="margin: 0 auto; width:85%; ">
             <div id="formularioDiv" style="display: block;vertical-align:top;">
                 <form method="POST" name="formulario" id="formulario" action="javascript:cargarPDF();">
@@ -27,7 +30,8 @@
             </div>
         </div>
         <script>
-            //application/pdf
+            
+
             function cargarPDF() {
                 var fd = new FormData(),
                         myFile = document.getElementById("file").files[0];

@@ -26,13 +26,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 /**
  *
  * @author fabio
  */
-@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm", "/GetNac","/toOferenteRegistro", "/UploadPDF"})
+@WebServlet(name = "ControllerOferente", urlPatterns = {"/ControllerOferente", "/OfferentLogin", "/OferenteRegistro", "/OferenteForm", "/GetNac","/toOferenteRegistro", "/UploadPDF", "/OferenteEdicion"})
 public class ControllerOferente extends HttpServlet {
 
     /**
@@ -62,6 +61,9 @@ public class ControllerOferente extends HttpServlet {
                 break;
             case "/UploadPDF":
                 this.doUploadPDF(request, response);
+                break;
+            case "/OferenteEdicion":
+                this.doEdit(request, response);
                 break;
         }
     }
@@ -113,9 +115,13 @@ public class ControllerOferente extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             oferente = Model.getInstance().login(oferente);
+            boolean b = true;
+            if("ESPERA".equals(oferente.getOferenteEstadoDeCuenta())){
+                b = false;
+            }
             response.setContentType("application/json; charset=UTF-8");
             out.write(gson.toJson(oferente));
-            if (oferente != null) {
+            if (oferente != null && b != false) {
                 HttpSession s = request.getSession();
                 s.setAttribute("oferente", oferente);
                 response.setStatus(200);
@@ -173,12 +179,13 @@ public class ControllerOferente extends HttpServlet {
 
     private void doUploadPDF(HttpServletRequest request, HttpServletResponse response) {
         try {
-            
+            Oferente of = (Oferente) request.getSession().getAttribute("oferente");
+            String ofEmail = of.getOferenteEmail();
             InputStream fileReader = request.getInputStream();
             final byte[] bitesFile = new byte[1024];
             fileReader.read(bitesFile);
             
-            Oferente o = Model.getInstance().readOferente("fabio@email.com");
+            Oferente o = Model.getInstance().readOferente(ofEmail);
             o.setOferenteCurriculum(bitesFile);
             boolean b = Model.getInstance().update(o);
             if (b) {
@@ -190,6 +197,36 @@ public class ControllerOferente extends HttpServlet {
             Logger.getLogger(ControllerOferente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ControllerOferente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void doEdit(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            BufferedReader reader = request.getReader();
+            Gson gson = new Gson();
+            Oferente oferenteE = gson.fromJson(reader, Oferente.class);
+            Oferente oferente = Model.getInstance().readOferente(((Oferente)request.getSession().getAttribute("oferente")).getOferenteEmail());
+            
+            oferente.setOferenteApellido(oferenteE.getOferenteApellido());
+            oferente.setOferenteCedula(oferenteE.getOferenteCedula());
+            oferente.setOferenteClave(oferenteE.getOferenteClave());
+            oferente.setOferenteNombre(oferenteE.getOferenteNombre());
+            oferente.setOferenteResidencia(oferenteE.getOferenteResidencia());
+            oferente.setOferenteTelefono(oferenteE.getOferenteTelefono());
+            oferente.setOferenteUserName(oferenteE.getOferenteUserName());
+
+            PrintWriter out = response.getWriter();
+            boolean x = Model.getInstance().update(oferente);
+            if (x) {
+                response.setContentType("application/json; charset=UTF-8");
+                out.write(gson.toJson(oferente));
+                response.setStatus(200);
+            } // ok with content
+            else {
+                response.setStatus(401);
+            }
+        } catch (JsonIOException | JsonSyntaxException | IOException e) {
+            response.setStatus(401); //Bad request
         }
     }
 
