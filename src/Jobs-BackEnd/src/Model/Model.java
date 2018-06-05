@@ -19,6 +19,7 @@ import DataAccess.HabilidadDAO;
 import DataAccess.PuestoDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.List;
 import java.util.List;
 import java.util.logging.Level;
@@ -163,6 +164,14 @@ public class Model {
     public Puesto readPuesto(int idPuesto,String empresaEmail){
         try {
             return DataAccess.PuestoDAO.getInstance().puestoGet(idPuesto,empresaEmail);            
+        } catch (Exception ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public List<Puesto> readPuesto(String empresaEmail){
+        try {
+            return DataAccess.PuestoDAO.getInstance().PuestoBuscarEmpresa(empresaEmail);            
         } catch (Exception ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
             return null;

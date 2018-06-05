@@ -123,11 +123,11 @@ input[type="text"]:valid.nofocus {box-shadow:none;}
 input.invalid {box-shadow: 0 0 1px 1px red;}
 
 table.grid{border:1px solid black; border-collapse: collapse;}
-table.grid thead tr {border:1px solid black; background-color: #ea6153; color: #ffffff; }
+table.grid thead tr {border:1px solid black; background-color: purple; color: #ffffff; }
 table.grid thead tr th{border:inherit;}
-table.grid tbody tr{border:1px solid black; background: #99ff99;}
-table.grid tbody tr:nth-child(odd) {background: #ffece6;}
-table.grid tbody tr:nth-child(even) {background: #ffb399;}
+table.grid tbody tr{border:1px solid black; background: blue;}
+table.grid tbody tr:nth-child(odd) {background: bisque;}
+table.grid tbody tr:nth-child(even) {background: aqua;}
 table.grid tbody tr:hover {background: #ff794d;}
 table.grid tbody tr td{border:inherit;}
 

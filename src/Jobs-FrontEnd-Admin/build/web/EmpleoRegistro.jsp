@@ -67,7 +67,7 @@
                 });      
         }  
          function show(per){
-             window.alert("sixxxxxxxxxxx");
+             window.alert("Puesto registrado");
          
         }
       </script> 

@@ -38,8 +38,7 @@
                         <div style="display: inline-block;">
                             <ul>
                                 <li><a href="Empleo">REGISTRAR EMPLEO</a></li>
-                                <li><a href="adminEmpresa">Aprovar Empresas</a></li>
-                                <li><a href="adminHabilidad">Agregar Habilidades</a></li>
+                                <li><a href="EmpleoListAll">Agregar Habilidades</a></li>
                                 <li><a href="adminReporte">Generar Reportes</a></li>
                             </ul>
                         </div>

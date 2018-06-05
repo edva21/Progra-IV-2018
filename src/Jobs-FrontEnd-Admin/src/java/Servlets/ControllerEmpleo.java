@@ -21,7 +21,10 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +36,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author gaspa
  */
-@WebServlet(name = "ControllerEmpleo", urlPatterns = {"/ControllerEmpleo","/Empleo","/EmpleoAdd"})
+@WebServlet(name = "ControllerEmpleo", urlPatterns = {"/ControllerEmpleo","/Empleo","/EmpleoAdd","/EmpleoListAll"})
 public class ControllerEmpleo extends HttpServlet {
 
     /**
@@ -55,6 +58,10 @@ public class ControllerEmpleo extends HttpServlet {
              case "/EmpleoAdd":
                 this.doEmpleoAdd(request,response);
                 break;
+            case "/EmpleoListAll":
+                this.doEmpleoListAll(request,response);
+                break;
+           
            
         }
     }
@@ -125,6 +132,23 @@ public class ControllerEmpleo extends HttpServlet {
       catch(Exception e){	
         response.setStatus(401); //Bad request
       }		
+    }
+
+    private void doEmpleoListAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+         try{
+                HttpSession s =  request.getSession();
+                Empresa x = (Empresa) s.getAttribute("empresa");
+                List<Puesto> puesto = Model.getInstance(). readPuesto(x.getEmpresaEmail());
+		request.setAttribute("puestos",puesto);
+                request.getRequestDispatcher("EmpleoHabilidad.jsp").forward( request, response);
+          }
+          catch(Exception e){
+                String error = e.getMessage(); 	
+                request.setAttribute("error",401);
+                response.setStatus(401); 
+                Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, e);
+                request.getRequestDispatcher("Error.jsp").forward( request, response);
+          }		 
     }
 
 }

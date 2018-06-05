@@ -82,6 +82,24 @@ public class PuestoDAO extends DAO{
          desconectar();
         return resultado;
     }
+     public List<Puesto> PuestoBuscarEmpresa(String empresa) throws Exception{
+         getConnection();
+        List<Puesto> resultado = new ArrayList<>();
+        try {
+            String sql="select * from Puesto  where Empresa_EmpresaEmail like '%%%s%%'";
+            sql=String.format(sql,empresa);
+            ResultSet rs =  executeQuery(sql);
+            while (rs.next()) {
+                resultado.add(puesto(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PuestoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         desconectar();
+        return resultado;
+    } 
+     
+     
      
      public List<Puesto> PuestoCincoMayores() throws Exception{
          getConnection();
